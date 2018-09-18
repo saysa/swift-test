@@ -18,9 +18,17 @@ class EnvController extends AbstractController
     /**
      * @Route("/env", name="env")
      */
-    public function index()
+    public function index(\Swift_Mailer $mailer)
     {
         $prenom = $this->param->get('prenom');
+
+        $message = (new \Swift_Message('bonjour'))
+            ->setSubject('bonjour 2')
+            ->setTo('sbo@conamed.de')
+            ->setFrom('saysabou@gmail.com')
+            ->setBody('Le corps', 'text/html');
+
+        $mailer->send($message);
 
         return $this->render('env/index.html.twig', [
             'controller_name' => $prenom,
